@@ -1,0 +1,30 @@
+.root {
+  width: 25%;
+  padding-right: 30px;
+  border-right: 1px solid var(--mantine-color-gray-2);
+}
+
+.list {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10;
+}
+
+.listItem {
+  display: flex;
+  padding-inline: 5;
+  align-items: center;
+  cursor: pointer;
+  border-radius: 5;
+
+  &:hover {
+    background-color: var(--mantine-color-dark-3);
+  }
+}
+
+[data-mantine-color-scheme="dark"] .root {
+  background-color: var(--mantine-color-dark-8);
+  border-right: 1px solid var(--mantine-color-dark-7);
+}
