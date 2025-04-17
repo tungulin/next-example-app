@@ -18,13 +18,21 @@
   align-items: center;
   cursor: pointer;
   border-radius: 5;
-
-  &:hover {
-    background-color: var(--mantine-color-dark-3);
-  }
 }
 
 [data-mantine-color-scheme="dark"] .root {
   background-color: var(--mantine-color-dark-8);
   border-right: 1px solid var(--mantine-color-dark-7);
+}
+
+[data-mantine-color-scheme="light"] .listItem {
+  &:hover {
+    background-color: var(--mantine-color-gray-2);
+  }
+}
+
+[data-mantine-color-scheme="dark"] .listItem {
+  &:hover {
+    background-color: var(--mantine-color-dark-3);
+  }
 }

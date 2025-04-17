@@ -1,4 +1,6 @@
+import { themeLocalStorage } from "@/shared/localStorage";
 import { create } from "zustand";
+import { useShallow } from "zustand/shallow";
 
 export enum Theme {
   DARK = "dark",
@@ -7,13 +9,25 @@ export enum Theme {
 
 interface ThemeStore {
   theme: Theme;
-  onToggleTheme: () => void;
+  actions: {
+    initTheme: (newTheme: Theme) => void;
+    onToggleTheme: () => void;
+  };
 }
 
 export const useThemeStore = create<ThemeStore>((set) => ({
   theme: Theme.LIGHT,
-  onToggleTheme: () =>
-    set((state) => ({
-      theme: state.theme === Theme.DARK ? Theme.LIGHT : Theme.DARK,
-    })),
+  actions: {
+    initTheme: (newTheme) =>
+      set(() => ({
+        theme: newTheme,
+      })),
+    onToggleTheme: () =>
+      set((state) => ({
+        theme: state.theme === Theme.DARK ? Theme.LIGHT : Theme.DARK,
+      })),
+  },
 }));
+
+export const useThemeActions = () =>
+  useThemeStore(useShallow((state) => state.actions));

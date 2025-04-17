@@ -1,9 +1,17 @@
 import type { AppProps } from "next/app";
-import { Box, Flex, MantineProvider, rem } from "@mantine/core";
+import {
+  Box,
+  Flex,
+  MantineProvider,
+  Pagination,
+  rem,
+  ScrollArea,
+} from "@mantine/core";
 
 import { themeConfig } from "@/app";
-import { useThemeStore } from "@/entities/theme";
+import { Theme, useThemeActions, useThemeStore } from "@/entities/theme";
 import { Header, Navbar } from "@/pages/root";
+import { Inter } from "next/font/google";
 
 import "@mantine/core/styles/global.css";
 import "@mantine/core/styles/ScrollArea.css";
@@ -20,20 +28,32 @@ import "@mantine/core/styles/Input.css";
 import "@mantine/core/styles/InlineInput.css";
 import "@mantine/core/styles/Flex.css";
 import "@mantine/core/styles/FloatingIndicator.css";
+import "@mantine/core/styles/Text.css";
 import "@mantine/core/styles/ActionIcon.css";
+import "@mantine/core/styles/Pagination.css";
+import "@mantine/core/styles/Stack.css";
+import "@mantine/core/styles/Grid.css";
+import "@mantine/core/styles/Badge.css";
+import { themeLocalStorage } from "@/shared/localStorage";
+import { useEffect } from "react";
+
+export const inter = Inter({ subsets: ["latin"] });
 
 export default function App({ Component, pageProps }: AppProps) {
   const theme = useThemeStore((state) => state.theme);
+  const { initTheme } = useThemeActions();
 
   return (
     <MantineProvider theme={themeConfig} forceColorScheme={theme}>
-      <Box style={{ height: "100vh" }}>
+      <Box className={inter.className} style={{ height: "100vh" }}>
         <Header />
         <Flex style={{ height: "calc(100% - 60px)" }}>
           <Navbar />
-          <Box p={rem(10)} style={{ width: "75%" }}>
-            <Component {...pageProps} />
-          </Box>
+          <ScrollArea w="75%" type="scroll">
+            <Box p={10}>
+              <Component {...pageProps} />
+            </Box>
+          </ScrollArea>
         </Flex>
       </Box>
     </MantineProvider>
