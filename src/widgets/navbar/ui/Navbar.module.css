@@ -18,6 +18,12 @@
   align-items: center;
   cursor: pointer;
   border-radius: 5;
+  text-decoration: none;
+  color: inherit;
+}
+
+.listItem .mantine-List-itemWrapper {
+  width: 100%;
 }
 
 [data-mantine-color-scheme="dark"] .root {

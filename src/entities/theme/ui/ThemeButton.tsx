@@ -3,6 +3,8 @@ import { ActionIcon } from "@mantine/core";
 import { IconSun, IconSunFilled } from "@tabler/icons-react";
 import { Theme, useThemeActions, useThemeStore } from "../model/store";
 import { themeLocalStorage } from "@/shared/localStorage";
+import { setCookie } from "cookies-next";
+// import Cookies from "js-cookie";
 
 export const ThemeButton = () => {
   const theme = useThemeStore((state) => state.theme);
@@ -10,8 +12,8 @@ export const ThemeButton = () => {
 
   const handleToggleTheme = () => {
     const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
-    themeLocalStorage.set(newTheme);
     onToggleTheme();
+    setCookie("theme", newTheme, { maxAge: 60 * 60 * 24 * 30 });
   };
 
   return (

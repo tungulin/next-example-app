@@ -13,9 +13,10 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
     <Flex mt="lg" gap="md">
       <Box miw={150} h={190} pos="relative">
         <Image
-          style={{ borderRadius: rem(15) }}
+          style={{ borderRadius: rem(15), objectFit: "cover" }}
+          priority={true}
           fill
-          objectFit="cover"
+          sizes="(max-width: 768px) 100vw, 33vw"
           src={movie.thumbnail}
           alt={movie.title}
           onError={({ currentTarget }) => {

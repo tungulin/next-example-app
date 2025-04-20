@@ -13,7 +13,7 @@ export const Header = () => {
       justify="space-between"
       align="center"
     >
-      <div/>
+      <div />
       <Title order={2}>Example Next app</Title>
       <ThemeButton />
     </Flex>

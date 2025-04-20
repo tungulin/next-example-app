@@ -1,0 +1,15 @@
+.carousel {
+  margin-top: var(--mantine-spacing-lg);
+  margin-inline: var(--mantine-spacing-lg);
+}
+
+.slide {
+  margin-inline: var(--mantine-spacing-xs);
+  border-radius: var(--mantine-radius-lg);
+}
+
+.slideSkeleton {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--mantine-radius-lg);
+}

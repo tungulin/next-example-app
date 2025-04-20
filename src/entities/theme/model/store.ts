@@ -1,4 +1,3 @@
-import { themeLocalStorage } from "@/shared/localStorage";
 import { create } from "zustand";
 import { useShallow } from "zustand/shallow";
 
@@ -8,7 +7,7 @@ export enum Theme {
 }
 
 interface ThemeStore {
-  theme: Theme;
+  theme?: Theme;
   actions: {
     initTheme: (newTheme: Theme) => void;
     onToggleTheme: () => void;
@@ -16,7 +15,7 @@ interface ThemeStore {
 }
 
 export const useThemeStore = create<ThemeStore>((set) => ({
-  theme: Theme.LIGHT,
+  theme: undefined,
   actions: {
     initTheme: (newTheme) =>
       set(() => ({

@@ -1,3 +1,3 @@
-import { LocalStorage } from "./libs/locaStorage";
+import { CreateLocalItem } from "./libs/createLocalItem";
 
-export const themeLocalStorage = new LocalStorage<string>("theme");
+export const themeLocalStorage = new CreateLocalItem<string>("theme");

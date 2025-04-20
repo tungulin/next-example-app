@@ -1,4 +1,4 @@
-export class LocalStorage<T extends any> {
+export class CreateLocalItem<T extends any> {
   private _key: string;
 
   constructor(key: string) {

@@ -1,10 +1,12 @@
-import { mantineHtmlProps } from "@mantine/core";
+import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 import { Html, Head, Main, NextScript } from "next/document";
 
-export default function Document() {
+function Document() {
   return (
     <Html lang="en" {...mantineHtmlProps}>
-      <Head />
+      <Head>
+        <ColorSchemeScript />
+      </Head>
       <body>
         <Main />
         <NextScript />
@@ -13,4 +15,4 @@ export default function Document() {
   );
 }
 
-// style={{ overflow: "hidden" }}
+export default Document;

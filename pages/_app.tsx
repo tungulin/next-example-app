@@ -1,4 +1,4 @@
-import type { AppProps } from "next/app";
+import type { AppContext, AppProps } from "next/app";
 import {
   Box,
   Flex,
@@ -10,8 +10,11 @@ import {
 
 import { themeConfig } from "@/app";
 import { Theme, useThemeActions, useThemeStore } from "@/entities/theme";
-import { Header, Navbar } from "@/pages/root";
+import { Header } from "@/widgets/header";
+import { getCookie } from "cookies-next";
+
 import { Inter } from "next/font/google";
+import { useLayoutEffect } from "react";
 
 import "@mantine/core/styles/global.css";
 import "@mantine/core/styles/ScrollArea.css";
@@ -34,28 +37,39 @@ import "@mantine/core/styles/Pagination.css";
 import "@mantine/core/styles/Stack.css";
 import "@mantine/core/styles/Grid.css";
 import "@mantine/core/styles/Badge.css";
-import { themeLocalStorage } from "@/shared/localStorage";
-import { useEffect } from "react";
+import "@mantine/core/styles/Skeleton.css";
+import "@mantine/carousel/styles.css";
 
 export const inter = Inter({ subsets: ["latin"] });
 
-export default function App({ Component, pageProps }: AppProps) {
-  const theme = useThemeStore((state) => state.theme);
+function App({ Component, pageProps, theme }: AppProps & { theme: Theme }) {
+  const updatedTheme = useThemeStore((state) => state.theme);
   const { initTheme } = useThemeActions();
 
+  useLayoutEffect(() => {
+    if (theme) {
+      initTheme(theme);
+    }
+  }, [theme]);
+
   return (
-    <MantineProvider theme={themeConfig} forceColorScheme={theme}>
+    <MantineProvider
+      theme={themeConfig}
+      defaultColorScheme={theme}
+      forceColorScheme={updatedTheme}
+    >
       <Box className={inter.className} style={{ height: "100vh" }}>
         <Header />
         <Flex style={{ height: "calc(100% - 60px)" }}>
-          <Navbar />
-          <ScrollArea w="75%" type="scroll">
-            <Box p={10}>
-              <Component {...pageProps} />
-            </Box>
-          </ScrollArea>
+          <Component {...pageProps} />
         </Flex>
       </Box>
     </MantineProvider>
   );
 }
+
+App.getInitialProps = async ({ ctx }: AppContext) => ({
+  theme: await getCookie("theme", ctx),
+});
+
+export default App;

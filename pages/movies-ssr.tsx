@@ -1,24 +1,30 @@
 import { Movie } from "@/entities/movie";
-import { Flex, Pagination, rem, TextInput } from "@mantine/core";
-import { InferGetServerSidePropsType } from "next";
+import {
+  Box,
+  Flex,
+  Pagination,
+  rem,
+  ScrollArea,
+  TextInput,
+} from "@mantine/core";
+import { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 import db from "../database";
 import { MovieList } from "@/entities/movie";
 import { useRouter } from "next/router";
-import { useDebouncedValue, useStateRef } from "@/shared/hooks";
+import { useDebouncedValue } from "@/shared/hooks";
 import { useEffect, useState } from "react";
+import { Navbar } from "@/widgets/navbar";
 
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps: GetServerSideProps<any> = async (context) => {
   const { page, search } = context.query;
   const limit = 10;
-  let offset = page * limit;
-
-  console.log("search", search);
+  let offset = (page * limit) | limit;
 
   const movies = await db<Movie>("movies")
     .limit(limit)
     .where((builder) => {
-      search && builder.where("title", "ILIKE", `%${search}%`);
+      search && builder.where("title", "like", `%${search}%`);
     })
     .offset(offset)
     .select("*");
@@ -26,7 +32,7 @@ export const getServerSideProps = async (context: any) => {
   const countPage = await db("movies")
     .count("id")
     .first()
-    .then((resp: any) => Math.ceil(resp.count / limit) - 1);
+    .then((resp: any) => Math.ceil(resp.count / limit) - 2);
 
   return { props: { movies, countPage } };
 };
@@ -40,7 +46,7 @@ export default function Home(props: HomeProps) {
   const [debouncedSearch] = useDebouncedValue(search);
 
   const handleChangePage = (page: number) => {
-    router.push({ pathname: "movies", query: { page } });
+    router.push({ pathname: "movies-ssr", query: { page } });
   };
 
   useEffect(() => {
@@ -59,25 +65,30 @@ export default function Home(props: HomeProps) {
 
   return (
     <>
-      <TextInput
-        size="md"
-        radius="md"
-        onChange={(event) => setSearch(event.currentTarget.value)}
-        placeholder="Search..."
-        variant="filled"
-      />
-      <MovieList movies={movies} />
-      <Flex mt={rem(30)} justify="center">
-        {countPage && !debouncedSearch && (
-          <Pagination
-            size="lg"
+      <Navbar />
+      <ScrollArea w="75%" type="scroll">
+        <Box p={10}>
+          <TextInput
+            size="md"
             radius="md"
-            value={currentPage}
-            onChange={handleChangePage}
-            total={countPage}
+            onChange={(event) => setSearch(event.currentTarget.value)}
+            placeholder="Search..."
+            variant="filled"
           />
-        )}
-      </Flex>
+          <MovieList movies={movies} />
+          <Flex mt={rem(30)} justify="center">
+            {countPage && !debouncedSearch && (
+              <Pagination
+                size="lg"
+                radius="md"
+                value={currentPage}
+                onChange={handleChangePage}
+                total={countPage}
+              />
+            )}
+          </Flex>
+        </Box>
+      </ScrollArea>
     </>
   );
 }

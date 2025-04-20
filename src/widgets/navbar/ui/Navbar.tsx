@@ -1,0 +1,29 @@
+import React from "react";
+
+import { Box, Container, Flex, List, rem, Stack, Title } from "@mantine/core";
+
+import classes from "./Navbar.module.css";
+import { ThemeButton } from "@/entities/theme";
+import { NAVBAR_OPTIONS } from "../constants";
+import Link from "next/link";
+
+export const Navbar = () => {
+  return (
+    <Box p={rem(10)} className={classes.root}>
+      <List className={classes.list} listStyleType="none">
+        {NAVBAR_OPTIONS.map((option) => (
+          // <Link key={option.key} href={option.key}>
+          <List.Item
+            renderRoot={(props) => <Link href={option.key} {...props} />}
+            className={classes.listItem}
+            w={"100%"}
+            h={40}
+          >
+            {option.value}
+          </List.Item>
+          // </Link>
+        ))}
+      </List>
+    </Box>
+  );
+};
