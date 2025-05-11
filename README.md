@@ -14,9 +14,7 @@ The project is presented as an example of NextJs capabilities and its rendering 
 
 ### Running frontend locally:
 
-1. To work with the database, you need to specify env
-
-2. Create .env file. Paste the required variables there -
+1. To work with the database, you need to specify env. Create .env file. Paste the required variables there:
 
 ```bash
 DB_HOST= "your host"
@@ -24,13 +22,13 @@ DB_USER= "your user"
 DB_PASS= "your password"
 DB_NAME= "your db name"
 ```
-3. Install all dependencies: 
+2. Install all dependencies: 
 
 ```bash
 yarn
 ```
 
-4. Initialize the database and write test movie data into it: 
+3. Initialize the database and write test movie data into it: 
 
 ```bash
 yarn db:init 
