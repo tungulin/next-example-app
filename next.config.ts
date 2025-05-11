@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  serverExternalPackages: ["knex"],
   eslint: {
     ignoreDuringBuilds: true,
   },

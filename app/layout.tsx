@@ -1,24 +1,19 @@
-import type { AppContext, AppProps } from "next/app";
 import {
   Box,
-  Flex,
+  ColorSchemeScript,
   MantineProvider,
-  Pagination,
-  rem,
-  ScrollArea,
+  mantineHtmlProps,
 } from "@mantine/core";
 
-import { themeConfig } from "@/app";
-import { Theme, useThemeActions, useThemeStore } from "@/entities/theme";
-import { Header } from "@/widgets/header";
-import { getCookie } from "cookies-next";
-
+import { cookies } from "next/headers";
+import { THEME } from "@/shared/constants/default";
+import { Theme } from "@/entities/theme";
 import { Inter } from "next/font/google";
-import { useLayoutEffect } from "react";
 
 import "@mantine/core/styles/global.css";
 import "@mantine/core/styles/ScrollArea.css";
 import "@mantine/core/styles/UnstyledButton.css";
+import "@mantine/core/styles/Button.css";
 import "@mantine/core/styles/VisuallyHidden.css";
 import "@mantine/core/styles/Paper.css";
 import "@mantine/core/styles/Popover.css";
@@ -38,38 +33,30 @@ import "@mantine/core/styles/Stack.css";
 import "@mantine/core/styles/Grid.css";
 import "@mantine/core/styles/Badge.css";
 import "@mantine/core/styles/Skeleton.css";
+import "@mantine/core/styles/Center.css";
 import "@mantine/carousel/styles.css";
+import { themeConfig } from "@/app";
 
 export const inter = Inter({ subsets: ["latin"] });
 
-function App({ Component, pageProps, theme }: AppProps & { theme: Theme }) {
-  const updatedTheme = useThemeStore((state) => state.theme);
-  const { initTheme } = useThemeActions();
-
-  useLayoutEffect(() => {
-    if (theme) {
-      initTheme(theme);
-    }
-  }, [theme]);
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const theme = (cookieStore.get(THEME)?.value as Theme) || Theme.LIGHT;
 
   return (
-    <MantineProvider
-      theme={themeConfig}
-      defaultColorScheme={theme}
-      forceColorScheme={updatedTheme}
-    >
-      <Box className={inter.className} style={{ height: "100vh" }}>
-        <Header />
-        <Flex style={{ height: "calc(100% - 60px)" }}>
-          <Component {...pageProps} />
-        </Flex>
-      </Box>
-    </MantineProvider>
+    <html lang="en" {...mantineHtmlProps}>
+      <head>
+        <ColorSchemeScript forceColorScheme={theme} />
+      </head>
+      <body>
+        <MantineProvider theme={themeConfig} forceColorScheme={theme}>
+          <Box className={inter.className}>{children}</Box>
+        </MantineProvider>
+      </body>
+    </html>
   );
 }
-
-App.getInitialProps = async ({ ctx }: AppContext) => ({
-  theme: await getCookie("theme", ctx),
-});
-
-export default App;

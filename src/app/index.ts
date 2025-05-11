@@ -1,1 +1,1 @@
-export { themeConfig } from "./config/theme";
+export { themeConfig } from "./theme";

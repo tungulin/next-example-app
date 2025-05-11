@@ -1,7 +1,8 @@
-import { useClientRedirect } from "@/shared/hooks";
-import React from "react";
+"use client";
 
-export default function Page() {
+import { useClientRedirect } from "@/shared/hooks";
+
+export default function Home() {
   useClientRedirect("/movies-ssr", { query: { page: 1 } });
 
   return <></>;

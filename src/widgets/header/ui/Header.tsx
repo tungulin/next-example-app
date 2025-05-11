@@ -1,3 +1,5 @@
+"use client";
+
 import { ThemeButton } from "@/entities/theme";
 import { Flex, rem, Title } from "@mantine/core";
 

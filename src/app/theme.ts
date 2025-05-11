@@ -18,7 +18,8 @@ const primaryColor: MantineColorsTuple = [
   "#36437a",
 ];
 
-export const themeOverride = createTheme({
+const themeOverride = createTheme({
+  defaultRadius: 8,
   primaryColor: "blue",
   colors: {
     blue: primaryColor,

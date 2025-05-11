@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import { Box, Container, Flex, List, rem, Stack, Title } from "@mantine/core";
@@ -12,8 +14,8 @@ export const Navbar = () => {
     <Box p={rem(10)} className={classes.root}>
       <List className={classes.list} listStyleType="none">
         {NAVBAR_OPTIONS.map((option) => (
-          // <Link key={option.key} href={option.key}>
           <List.Item
+            key={option.key}
             renderRoot={(props) => <Link href={option.key} {...props} />}
             className={classes.listItem}
             w={"100%"}
@@ -21,7 +23,6 @@ export const Navbar = () => {
           >
             {option.value}
           </List.Item>
-          // </Link>
         ))}
       </List>
     </Box>
