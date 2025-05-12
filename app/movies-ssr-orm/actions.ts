@@ -1,7 +1,7 @@
 "use server";
 
 import { cache } from "react";
-import db from "../../database";
+import db from "app/database";
 import { Movie } from "@/entities/movie";
 
 export const getMovies = cache(async (page?: number, search?: string) => {

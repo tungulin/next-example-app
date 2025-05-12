@@ -2,10 +2,9 @@
 
 import React from "react";
 
-import { Box, Container, Flex, List, rem, Stack, Title } from "@mantine/core";
+import { Box, List, rem } from "@mantine/core";
 
 import classes from "./Navbar.module.css";
-import { ThemeButton } from "@/entities/theme";
 import { NAVBAR_OPTIONS } from "../constants";
 import Link from "next/link";
 
