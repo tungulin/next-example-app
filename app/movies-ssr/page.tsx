@@ -14,8 +14,6 @@ interface Props {
   }>;
 }
 
-export const revalidate = 3600;
-
 export default async function MoviesSSR({ searchParams }: Props) {
   let { page: pageParam, search } = await searchParams;
   const page = pageParam ? Number(pageParam) : 1;
@@ -28,7 +26,7 @@ export default async function MoviesSSR({ searchParams }: Props) {
       <ScrollArea w="75%" type="scroll">
         <Header />
         <Box p={10}>
-          <Search />
+          <Search shouldChangeQuery />
           <MovieList movies={movies} />
           <Pagination search={search} countPage={countPage} page={page} />
         </Box>

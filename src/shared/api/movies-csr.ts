@@ -1,3 +1,4 @@
+"use client";
 import { getQueryParams } from "../libs/http";
 import { GetMoviesResult } from "./types";
 

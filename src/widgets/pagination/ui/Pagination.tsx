@@ -8,9 +8,15 @@ interface Props {
   countPage: number;
   page: number;
   search?: string;
+  shouldChangeQuery?: boolean;
 }
 
-export const Pagination = ({ search, countPage, page }: Props) => {
+export const Pagination = ({
+  search,
+  countPage,
+  page,
+  shouldChangeQuery = false,
+}: Props) => {
   const router = useRouter();
 
   const pathname = usePathname();
@@ -27,7 +33,9 @@ export const Pagination = ({ search, countPage, page }: Props) => {
   );
 
   const handleChangePage = (page: number) => {
-    router.push(pathname + "?" + createQueryString("page", page.toString()));
+    if (shouldChangeQuery) {
+      router.push(pathname + "?" + createQueryString("page", page.toString()));
+    }
   };
 
   return (

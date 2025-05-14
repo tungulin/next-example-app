@@ -28,7 +28,7 @@ export default async function MoviesSSR({ searchParams }: Props) {
       <ScrollArea w="75%" type="scroll">
         <Header />
         <Box p={10}>
-          <Search />
+          <Search shouldChangeQuery />
           <MovieList movies={movies} />
           <Pagination search={search} countPage={countPage} page={page} />
         </Box>
