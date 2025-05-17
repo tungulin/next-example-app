@@ -1,14 +1,10 @@
-import {
-  Box,
-  ColorSchemeScript,
-  MantineProvider,
-  mantineHtmlProps,
-} from "@mantine/core";
+import { Box, ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
 
 import { cookies } from "next/headers";
 import { THEME } from "@/shared/constants/default";
-import { Theme } from "@/entities/theme";
+import { Theme } from "@/features/toggle-theme";
 import { Inter } from "next/font/google";
+import { Providers } from "@/app";
 
 import "@mantine/core/styles/global.css";
 import "@mantine/core/styles/ScrollArea.css";
@@ -24,6 +20,7 @@ import "@mantine/core/styles/Overlay.css";
 import "@mantine/core/styles/ModalBase.css";
 import "@mantine/core/styles/Input.css";
 import "@mantine/core/styles/InlineInput.css";
+import "@mantine/core/styles/PasswordInput.css";
 import "@mantine/core/styles/Flex.css";
 import "@mantine/core/styles/FloatingIndicator.css";
 import "@mantine/core/styles/Text.css";
@@ -34,8 +31,8 @@ import "@mantine/core/styles/Grid.css";
 import "@mantine/core/styles/Badge.css";
 import "@mantine/core/styles/Skeleton.css";
 import "@mantine/core/styles/Center.css";
+import "@mantine/core/styles/Modal.css";
 import "@mantine/carousel/styles.css";
-import { themeConfig } from "@/app";
 
 export const inter = Inter({ subsets: ["latin"] });
 
@@ -53,9 +50,9 @@ export default async function RootLayout({
         <ColorSchemeScript forceColorScheme={theme} />
       </head>
       <body>
-        <MantineProvider theme={themeConfig} forceColorScheme={theme}>
+        <Providers>
           <Box className={inter.className}>{children}</Box>
-        </MantineProvider>
+        </Providers>
       </body>
     </html>
   );

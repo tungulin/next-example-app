@@ -3,17 +3,11 @@ import db from "app/database";
 
 import { Movie } from "@/entities/movie";
 
-type Params = {
-  page?: number;
-  search?: string;
-};
+export async function GET(req: NextRequest): Promise<Response> {
+  const { searchParams } = new URL(req.url);
 
-export async function GET(
-  req: NextRequest,
-  context: { params: Params }
-): Promise<Response> {
-  let page = context.params?.page;
-  let search = context.params?.search;
+  let page = Number(searchParams.get("page"));
+  let search = searchParams.get("search");
 
   if (!page) page = 1;
 

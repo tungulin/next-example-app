@@ -28,7 +28,7 @@ export const MovieList = ({ movies }: MovieListProps) => {
         <MovieCard key={movie.title} movie={movie} />
       ))}
 
-      {movies.length === 0 && (
+      {!movies.length && (
         <Center mih="calc(100vh - 160px)">
           <Stack>
             <Text size="lg">Movies not found</Text>

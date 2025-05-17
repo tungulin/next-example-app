@@ -1,3 +1,8 @@
+export type GetMoviesParams = {
+  page: number;
+  search?: string;
+};
+
 export type GetMoviesResult = {
   movies: {
     title: string;

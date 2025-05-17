@@ -9,14 +9,18 @@ interface Props {
   page: number;
   search?: string;
   shouldChangeQuery?: boolean;
+  onChange?: (page: number) => void;
 }
 
-export const Pagination = ({
-  search,
-  countPage,
-  page,
-  shouldChangeQuery = false,
-}: Props) => {
+export const Pagination = (props: Props) => {
+  const {
+    search,
+    countPage,
+    page,
+    shouldChangeQuery = false,
+    onChange,
+  } = props;
+
   const router = useRouter();
 
   const pathname = usePathname();
@@ -36,11 +40,13 @@ export const Pagination = ({
     if (shouldChangeQuery) {
       router.push(pathname + "?" + createQueryString("page", page.toString()));
     }
+
+    onChange?.(page);
   };
 
   return (
     <Flex mt={rem(30)} justify="center">
-      {countPage && !search && (
+      {countPage > 0 && !search && (
         <UIPagination
           size="lg"
           radius="md"
