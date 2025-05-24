@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Modal, Button, Stack, Text, Flex } from "@mantine/core";
 import Form from "@/shared/ui/Form";
 import { useForm } from "@mantine/form";
@@ -6,6 +6,8 @@ import { valibotResolver } from "mantine-form-valibot-resolver";
 import { AuthUserSchema, AuthUserOutputSchema } from "../schema";
 import { useUnmount } from "@/shared/hooks";
 import { userApi } from "@/entities/user";
+import { notifications } from "@mantine/notifications";
+import { useRouter } from "next/navigation";
 
 interface Props {
   opened: boolean;
@@ -15,13 +17,20 @@ interface Props {
 
 export const AuthModal = (props: Props) => {
   const { opened, onClose, onClickRegistry } = props;
+  const router = useRouter();
 
   const form = useForm({
     validate: valibotResolver(AuthUserSchema),
   });
 
   const handleSubmitForm = (values: AuthUserOutputSchema) => {
-    userApi.login(values).catch((error) => console.log("error", error));
+    userApi.login(values).then(() => {
+      notifications.show({
+        color: "green",
+        message: "Login was successful!",
+      });
+      router.push("/profile");
+    });
   };
 
   useUnmount(() => {
