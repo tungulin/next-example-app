@@ -1,2 +1,2 @@
 export { themeConfig } from "./theme";
-export { Providers } from "./providers";
+export { Providers } from "./providers/providers";

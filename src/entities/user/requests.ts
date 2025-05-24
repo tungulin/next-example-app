@@ -21,3 +21,7 @@ export const login = (params: { login: string; password: string }) => {
 export const registry = (params: { login: string; password: string }) => {
   return instance.post("/registry", params);
 };
+
+export const getUserInfo = () => {
+  return instance.get("/");
+};

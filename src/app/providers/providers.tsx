@@ -5,12 +5,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
-import { themeConfig } from "./theme";
+import { themeConfig } from "../theme";
 import { MantineProvider } from "@mantine/core";
 import { PropsWithChildren } from "react";
 import { useCookiesNext } from "cookies-next";
 import { THEME } from "@/shared/constants/default";
 import { Theme } from "@/features/toggle-theme";
+import { AuthProvider } from "./AuthProvider";
 
 function makeQueryClient() {
   return new QueryClient({
@@ -41,7 +42,7 @@ export const Providers = ({ children }: PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={themeConfig} forceColorScheme={theme}>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
       </MantineProvider>
     </QueryClientProvider>
   );

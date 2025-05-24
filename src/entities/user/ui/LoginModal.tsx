@@ -5,7 +5,7 @@ import { useForm } from "@mantine/form";
 import { valibotResolver } from "mantine-form-valibot-resolver";
 import { AuthUserSchema, AuthUserOutputSchema } from "../schema";
 import { useUnmount } from "@/shared/hooks";
-import { userApi } from "@/entities/user";
+import { userApi, useUserActions } from "@/entities/user";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
 
@@ -15,9 +15,10 @@ interface Props {
   onClickRegistry: () => void;
 }
 
-export const AuthModal = (props: Props) => {
+export const LoginModal = (props: Props) => {
   const { opened, onClose, onClickRegistry } = props;
   const router = useRouter();
+  const { setUser } = useUserActions();
 
   const form = useForm({
     validate: valibotResolver(AuthUserSchema),
@@ -29,6 +30,8 @@ export const AuthModal = (props: Props) => {
         color: "green",
         message: "Login was successful!",
       });
+      setUser(values);
+      onClose();
       router.push("/profile");
     });
   };

@@ -5,7 +5,7 @@ import { Navbar } from "@/widgets/navbar";
 import { getMovies } from "./actions";
 import { Search } from "@/widgets/search";
 import { Pagination } from "@/widgets/pagination";
-import { Header } from "@/widgets/header";
+import { Header } from "@/shared/layouts";
 
 interface Props {
   searchParams: Promise<{

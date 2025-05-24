@@ -5,7 +5,7 @@ import { useForm } from "@mantine/form";
 import { valibotResolver } from "mantine-form-valibot-resolver";
 import { RegistryUserOutputSchema, RegistryUserSchema } from "../schema";
 import { useUnmount } from "@/shared/hooks";
-import { userApi } from "@/entities/user";
+import { userApi, useUserActions } from "@/entities/user";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
 
@@ -18,6 +18,7 @@ interface Props {
 export const RegistryModal = (props: Props) => {
   const { opened, onClose, onClickAuth } = props;
   const router = useRouter();
+  const { setUser } = useUserActions();
 
   const form = useForm({
     validate: valibotResolver(RegistryUserSchema),
@@ -25,6 +26,8 @@ export const RegistryModal = (props: Props) => {
 
   const handleSubmitForm = (values: RegistryUserOutputSchema) => {
     userApi.registry(values).then(() => {
+      setUser(values);
+      onClose();
       notifications.show({
         color: "green",
         message: "Registration was successful!",

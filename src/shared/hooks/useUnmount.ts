@@ -4,8 +4,6 @@ export const useUnmount = <T extends DependencyList | []>(
   callback: () => void,
   dependency?: T | []
 ) => {
-  console.log("dependency", dependency);
-
   useEffect(
     () => {
       return () => {

@@ -1,4 +1,4 @@
-export { AuthModal } from "./ui/AuthModal";
-export { RegistryModal } from "./ui/RegistryModal";
+export { AvatarSection } from "./ui/AvatarSection";
 
 export * as userApi from "./requests";
+export * from "./model/store";

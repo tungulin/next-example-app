@@ -2,12 +2,12 @@
 import { Box, Flex, ScrollArea } from "@mantine/core";
 import { MovieList, useSearch } from "@/entities/movie";
 
-import { Navbar } from "@/widgets/navbar";
 import { Search } from "@/widgets/search";
 import { Pagination } from "@/widgets/pagination";
-import { Header } from "@/widgets/header";
+import { Header } from "@/shared/layouts";
 import { useState } from "react";
 import { useMovies } from "@/pages/movies";
+import { AvatarSection } from "@/entities/user";
 
 export default function MoviesCSR() {
   const search = useSearch();
@@ -19,10 +19,8 @@ export default function MoviesCSR() {
 
   return (
     <Flex mih="100vh">
-      {/* <Navbar /> */}
-      {/* w="75%" */}
       <ScrollArea w="100%" type="scroll">
-        <Header />
+        <Header rightSlot={<AvatarSection />} />
         <Box p={10}>
           <Search />
           {!isLoading && <MovieList movies={movies} />}

@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import db from "app/server/database";
 import jwt from "jsonwebtoken";
-
-const JWT_TOKEN = process.env.JWT_SECRET as string;
+import { JWT_TOKEN } from "app/server/constants";
 
 export async function POST(req: NextRequest): Promise<Response> {
   const data = await req.json();
@@ -52,7 +51,7 @@ export async function POST(req: NextRequest): Promise<Response> {
     secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     path: "/",
-    maxAge: 60 * 24, // 1 час
+    maxAge: 7 * 24,
   });
 
   return response;
