@@ -2,7 +2,7 @@ import type { Knex } from "knex";
 import { loadEnvConfig } from "@next/env";
 import path from "path";
 
-const projectDir = path.relative(process.cwd(), "../");
+const projectDir = path.relative(process.cwd(), "../../");
 loadEnvConfig(projectDir);
 
 export default {

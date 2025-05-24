@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import db from "app/database";
+import db from "app/server/database";
 
 import { Movie } from "@/entities/movie";
 

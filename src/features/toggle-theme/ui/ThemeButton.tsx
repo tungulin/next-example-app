@@ -8,6 +8,8 @@ import { setCookie, useCookiesNext } from "cookies-next";
 import { THEME } from "@/shared/constants/default";
 import { useRouter } from "next/navigation";
 
+import { notifications } from "@mantine/notifications";
+
 export const ThemeButton = () => {
   const router = useRouter();
   const cookies = useCookiesNext();

@@ -1,17 +1,26 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeButton } from "@/features/toggle-theme";
-import { Button, Flex, rem, Stack, Title } from "@mantine/core";
+import { Avatar, Flex, rem, Title } from "@mantine/core";
 
-import { AuthModal } from "@/entities/user";
+import { AuthModal, RegistryModal } from "@/entities/user";
 
 import classes from "./Header.module.css";
 import { useDisclosure } from "@mantine/hooks";
+import { useUnmount } from "@/shared/hooks";
 
 export const Header = () => {
   const [openedAuthModal, { open: openAuthModal, close: closeAuthModal }] =
     useDisclosure(false);
+
+  const [isAuthModal, setIsAuthModal] = useState(true);
+
+  useUnmount(() => {
+    setIsAuthModal(true);
+  });
+
+  const handleToggleTypeModal = () => setIsAuthModal(!isAuthModal);
 
   return (
     <Flex
@@ -22,13 +31,27 @@ export const Header = () => {
     >
       <div />
       <Title order={2}>Example Next app</Title>
-
       <Flex align="center" gap="xl">
         <ThemeButton />
-        <Button onClick={openAuthModal}>Auth</Button>
+        <Avatar
+          className={classes.avatar}
+          onClick={openAuthModal}
+          radius="xl"
+        />
       </Flex>
-
-      <AuthModal opened={openedAuthModal} onClose={closeAuthModal} />
+      {isAuthModal ? (
+        <AuthModal
+          opened={openedAuthModal}
+          onClose={closeAuthModal}
+          onClickRegistry={handleToggleTypeModal}
+        />
+      ) : (
+        <RegistryModal
+          opened={openedAuthModal}
+          onClose={closeAuthModal}
+          onClickAuth={handleToggleTypeModal}
+        />
+      )}
     </Flex>
   );
 };

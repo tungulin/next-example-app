@@ -3,6 +3,10 @@
   height: 60;
 }
 
+.avatar {
+  cursor: pointer;
+}
+
 [data-mantine-color-scheme="dark"] .root {
   border-bottom: 1px solid var(--mantine-color-dark-8);
 }

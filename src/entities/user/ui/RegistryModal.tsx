@@ -1,27 +1,33 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Modal, Button, Stack, Text, Flex } from "@mantine/core";
 import Form from "@/shared/ui/Form";
 import { useForm } from "@mantine/form";
 import { valibotResolver } from "mantine-form-valibot-resolver";
-import { AuthUserSchema, AuthUserOutputSchema } from "../schema";
+import { RegistryUserOutputSchema, RegistryUserSchema } from "../schema";
 import { useUnmount } from "@/shared/hooks";
 import { userApi } from "@/entities/user";
+import { notifications } from "@mantine/notifications";
 
 interface Props {
   opened: boolean;
   onClose: () => void;
-  onClickRegistry: () => void;
+  onClickAuth: () => void;
 }
 
-export const AuthModal = (props: Props) => {
-  const { opened, onClose, onClickRegistry } = props;
+export const RegistryModal = (props: Props) => {
+  const { opened, onClose, onClickAuth } = props;
 
   const form = useForm({
-    validate: valibotResolver(AuthUserSchema),
+    validate: valibotResolver(RegistryUserSchema),
   });
 
-  const handleSubmitForm = (values: AuthUserOutputSchema) => {
-    userApi.login(values).catch((error) => console.log("error", error));
+  const handleSubmitForm = (values: RegistryUserOutputSchema) => {
+    userApi.registry(values).then(() => {
+      notifications.show({
+        color: "green",
+        message: "Registration was successful!",
+      });
+    });
   };
 
   useUnmount(() => {
@@ -33,7 +39,7 @@ export const AuthModal = (props: Props) => {
     <Modal
       opened={opened}
       onClose={onClose}
-      title="Authentication"
+      title="Registration"
       centered
       w={300}
       h={300}
@@ -42,6 +48,7 @@ export const AuthModal = (props: Props) => {
         <Stack>
           <Form.Input name="login" label="Login" />
           <Form.PasswordInput name="password" label="Password" />
+          <Form.PasswordInput name="repeatPassword" label="Repeat password" />
           <Button type="submit" mt={10} w="100%">
             Submit
           </Button>
@@ -49,14 +56,14 @@ export const AuthModal = (props: Props) => {
       </Form>
 
       <Flex mt={30} gap="xs">
-        <Text size="sm">Not registered?</Text>
+        <Text size="sm">Logined?</Text>
         <Text
-          onClick={onClickRegistry}
+          onClick={onClickAuth}
           size="sm"
           style={{ cursor: "pointer" }}
           td="underline"
         >
-          Register
+          Login
         </Text>
       </Flex>
     </Modal>
