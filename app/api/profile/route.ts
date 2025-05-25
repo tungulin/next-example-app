@@ -16,8 +16,6 @@ export async function GET(req: NextRequest) {
   try {
     var decoded = jwt.verify(token, JWT_TOKEN);
 
-    console.log("decoded", decoded);
-
     const user = await db("users")
       .where({ id: decoded.userId })
       .select("users.login")

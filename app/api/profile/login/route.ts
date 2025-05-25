@@ -30,7 +30,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   }
 
   const token = jwt.sign({ userId: user.id, login: user.login }, JWT_TOKEN, {
-    expiresIn: "1d",
+    expiresIn: "7d",
   });
 
   const response = NextResponse.json({ message: "Login successful" });
@@ -38,11 +38,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   response.cookies.set({
     name: "token",
     value: token,
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "strict",
-    path: "/",
-    maxAge: 7 * 24,
+    maxAge: 7 * 24 * 60,
   });
 
   return response;

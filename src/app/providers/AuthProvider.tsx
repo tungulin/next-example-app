@@ -1,6 +1,7 @@
 "use client";
 
 import { userApi, useUserActions } from "@/entities/user";
+import { AUTH_TOKEN } from "@/shared/constants/default";
 import { useCookiesNext } from "cookies-next";
 import { usePathname, useRouter } from "next/navigation";
 import React, { PropsWithChildren, useEffect } from "react";
@@ -21,7 +22,7 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         setUser(user);
       })
       .catch(() => {
-        cookies.deleteCookie("token");
+        cookies.deleteCookie(AUTH_TOKEN);
         clearUser();
 
         if (pathname && authPaths.includes(pathname)) {

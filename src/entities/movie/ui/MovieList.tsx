@@ -4,7 +4,7 @@ import { Movie, MovieCard } from "@/entities/movie";
 import { Button, Center, Stack, Text } from "@mantine/core";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
-import { useSearchActions } from "../model/store";
+import { useMovieActions } from "../model/store";
 
 type MovieListProps = {
   movies: Movie[];
@@ -13,7 +13,7 @@ type MovieListProps = {
 export const MovieList = ({ movies }: MovieListProps) => {
   const pathname = usePathname();
   const router = useRouter();
-  const { clearSearch } = useSearchActions();
+  const { clearSearch } = useMovieActions();
 
   const handleClickClearFilters = () => {
     if (pathname) {

@@ -1,7 +1,7 @@
 import { Box, Flex, ScrollArea } from "@mantine/core";
 import { MovieList } from "@/entities/movie";
 
-import { Navbar } from "@/widgets/navbar";
+import { Navbar } from "@/shared/layouts";
 import { getMovies } from "./actions";
 import { Search } from "@/widgets/search";
 import { Pagination } from "@/widgets/pagination";

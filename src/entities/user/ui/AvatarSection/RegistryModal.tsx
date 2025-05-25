@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Button, Stack, Text, Flex } from "@mantine/core";
 import Form from "@/shared/ui/Form";
 import { useForm } from "@mantine/form";
 import { valibotResolver } from "mantine-form-valibot-resolver";
-import { RegistryUserOutputSchema, RegistryUserSchema } from "../schema";
+import { RegistryUserOutputSchema, RegistryUserSchema } from "../../schema";
 import { useUnmount } from "@/shared/hooks";
 import { userApi, useUserActions } from "@/entities/user";
 import { notifications } from "@mantine/notifications";
@@ -19,21 +19,28 @@ export const RegistryModal = (props: Props) => {
   const { opened, onClose, onClickAuth } = props;
   const router = useRouter();
   const { setUser } = useUserActions();
+  const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
     validate: valibotResolver(RegistryUserSchema),
   });
 
   const handleSubmitForm = (values: RegistryUserOutputSchema) => {
-    userApi.registry(values).then(() => {
-      setUser(values);
-      onClose();
-      notifications.show({
-        color: "green",
-        message: "Registration was successful!",
+    setIsLoading(true);
+    userApi
+      .registry(values)
+      .then(() => {
+        setUser(values);
+        onClose();
+        notifications.show({
+          color: "green",
+          message: "Registration was successful!",
+        });
+        router.push("/profile");
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-      router.push("/profile");
-    });
   };
 
   useUnmount(() => {
@@ -48,7 +55,6 @@ export const RegistryModal = (props: Props) => {
       title="Registration"
       centered
       w={300}
-      h={300}
     >
       <Form form={form} onSubmit={handleSubmitForm}>
         <Stack>

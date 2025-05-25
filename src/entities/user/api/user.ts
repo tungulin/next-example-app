@@ -5,13 +5,15 @@ const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API + "/profile",
 });
 
-instance.interceptors.response.use(null, (error) => {
-  const errMessage = error.response.data?.message || "Something going wrong...";
-  notifications.show({
-    color: "red",
-    message: errMessage,
-  });
-  return Promise.reject(error);
+instance.interceptors.response.use(null, ({ response, ...other }) => {
+  if (response.status !== 401) {
+    const errMessage = response.data?.message || "Something going wrong...";
+    notifications.show({
+      color: "red",
+      message: errMessage,
+    });
+    return Promise.reject({ response, ...other });
+  }
 });
 
 export const login = (params: { login: string; password: string }) => {

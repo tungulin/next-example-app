@@ -1,8 +1,9 @@
 export type Movie = {
+  id: string;
   title: string;
   year: number;
-  cast: string[];
-  genres: string[];
   extract: string;
   thumbnail: string;
+  genres: string[];
+  cast: string[];
 };

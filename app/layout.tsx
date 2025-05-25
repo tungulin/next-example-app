@@ -10,8 +10,14 @@ import { Notifications } from "@mantine/notifications";
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 import "@mantine/carousel/styles.css";
+import { Metadata } from "next";
 
 export const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "Movies NextJS",
+  description: "NextJS example app",
+};
 
 export default async function RootLayout({
   children,

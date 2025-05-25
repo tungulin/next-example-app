@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchActions } from "@/entities/movie";
+import { useMovieActions } from "@/entities/movie";
 import { useDebouncedValue } from "@/shared/hooks";
 import { TextInput } from "@mantine/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -15,7 +15,7 @@ export const Search = (props: Props) => {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { setSearch } = useSearchActions();
+  const { setSearch } = useMovieActions();
   const [_search, _setSearch] = useState("");
   const router = useRouter();
 
