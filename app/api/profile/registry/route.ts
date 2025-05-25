@@ -32,8 +32,6 @@ export async function POST(req: NextRequest): Promise<Response> {
     .returning("*")
     .then((val) => val[0]);
 
-  console.log("newUser", newUser);
-
   const token = jwt.sign(
     { userId: newUser.id, login: newUser.login },
     JWT_TOKEN,

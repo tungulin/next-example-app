@@ -1,18 +1,17 @@
 "use client";
 import { Box, Flex, ScrollArea } from "@mantine/core";
-import { MovieList, useSearch } from "@/entities/movie";
+import { movieApi, MovieList, useMovie } from "@/entities/movie";
 
 import { Search } from "@/widgets/search";
 import { Pagination } from "@/widgets/pagination";
 import { Header, Navbar } from "@/shared/layouts";
 import { useState } from "react";
-import { useMovies } from "@/pages/movies";
 import { AvatarSection } from "@/entities/user";
 
 export default function MoviesCSR() {
-  const search = useSearch();
+  const search = useMovie((state) => state.search);
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useMovies(page, search);
+  const { data, isLoading } = movieApi.useMovies(page, search);
 
   const movies = data?.movies || [];
   const countPage = data?.countPage || 0;

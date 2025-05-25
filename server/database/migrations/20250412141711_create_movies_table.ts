@@ -24,16 +24,15 @@ export async function up(knex: Knex): Promise<void> {
     table.integer("userId").references("id").inTable("users");
   });
 
-  await knex.schema.createTable("comments", function (table) {
+  await knex.schema.createTable("favoriteMovies", function (table) {
     table.increments("id").primary();
-    table.string("comment").notNullable();
     table.integer("movieId").references("id").inTable("movies");
     table.integer("userId").references("id").inTable("users");
   });
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await knex.schema.dropTable("comments");
+  await knex.schema.dropTable("favoriteMovies");
   await knex.schema.dropTable("ratings");
   await knex.schema.dropTable("users");
   await knex.schema.dropTable("movies");

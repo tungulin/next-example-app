@@ -21,6 +21,19 @@ export async function GET(req: NextRequest) {
       .select("users.login")
       .first();
 
+    user.favoriteMovies = await db("favoriteMovies")
+      .join("movies", "movies.id", "favoriteMovies.movieId")
+      .where("favoriteMovies.userId", decoded.userId)
+      .select(
+        "movies.id",
+        "movies.title",
+        "movies.year",
+        "movies.extract",
+        "movies.thumbnail",
+        "movies.genres",
+        "movies.cast"
+      );
+
     return NextResponse.json({ user });
   } catch (err) {
     console.log("err", err);

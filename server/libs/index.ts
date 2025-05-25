@@ -1,1 +1,0 @@
-export { getDefaultResponse } from "./getDefaultResponse";

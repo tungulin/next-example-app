@@ -1,11 +1,10 @@
 "use client";
 
-import React, { PropsWithChildren, ReactNode } from "react";
+import React, { ReactNode } from "react";
 
 import { Box, List, rem } from "@mantine/core";
 
 import classes from "./Navbar.module.css";
-import { NAVBAR_OPTIONS } from "../constants";
 import Link from "next/link";
 
 interface Option {

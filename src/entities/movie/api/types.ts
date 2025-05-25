@@ -5,6 +5,7 @@ export type GetMoviesParams = {
 
 export type GetMoviesResult = {
   movies: {
+    id: string;
     title: string;
     year: number;
     cast: string[];
@@ -13,4 +14,8 @@ export type GetMoviesResult = {
     thumbnail: string;
   }[];
   countPage: number;
+};
+
+export type AddFavoriteParams = {
+  movieId: string;
 };

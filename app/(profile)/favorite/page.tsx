@@ -1,5 +1,6 @@
 "use client";
 
+import { MovieCard, useMovie } from "@/entities/movie";
 import { AvatarSection } from "@/entities/user";
 import { Header, Navbar } from "@/shared/layouts";
 import { Box, Button, Flex, ScrollArea } from "@mantine/core";
@@ -22,6 +23,8 @@ const NAVBAR_OPTIONS = [
 ];
 
 export default function Favorite() {
+  const favoriteMovies = useMovie((state) => state.favoriteMovies);
+
   return (
     <ScrollArea>
       <Header
@@ -33,9 +36,13 @@ export default function Favorite() {
         text="Next example app | Favorite"
         rightSlot={<AvatarSection />}
       />
-      <Flex h="calc(100vh - 60px)">
+      <Flex mih="calc(100vh - 60px)">
         <Navbar options={NAVBAR_OPTIONS} />
-        <Box w="100%">Favorite</Box>
+        <Box w="100%" p="md">
+          {favoriteMovies.map((movie) => (
+            <MovieCard key={movie.id} movie={movie} />
+          ))}
+        </Box>
       </Flex>
     </ScrollArea>
   );

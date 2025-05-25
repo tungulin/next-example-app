@@ -10,6 +10,7 @@ interface MovieStore {
     clearSearch: () => void;
     addFavoriteMovie: (movie: Movie) => void;
     removeFavoriteMovie: (movie: Movie) => void;
+    initFavoriteMovies: (movies: Movie[]) => void;
   };
 }
 
@@ -24,6 +25,10 @@ export const useMovieStore = create<MovieStore>((set) => ({
     clearSearch: () =>
       set(() => ({
         search: "",
+      })),
+    initFavoriteMovies: (movies: Movie[]) =>
+      set(() => ({
+        favoriteMovies: movies,
       })),
     addFavoriteMovie: (movie: Movie) =>
       set((state) => {
@@ -45,8 +50,4 @@ export const useMovieStore = create<MovieStore>((set) => ({
 export const useMovieActions = () =>
   useMovieStore(useShallow((state) => state.actions));
 
-export const useSearch = () =>
-  useMovieStore(useShallow((state) => state.search));
-
-export const useFavoriteMovie = () =>
-  useMovieStore(useShallow((state) => state.favoriteMovies));
+export const useMovie = useMovieStore;

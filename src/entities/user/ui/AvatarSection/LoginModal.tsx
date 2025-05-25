@@ -8,6 +8,7 @@ import { useUnmount } from "@/shared/hooks";
 import { userApi, useUserActions } from "@/entities/user";
 import { notifications } from "@mantine/notifications";
 import { useRouter } from "next/navigation";
+import { useMovieActions } from "@/entities/movie";
 
 interface Props {
   opened: boolean;
@@ -19,6 +20,7 @@ export const LoginModal = (props: Props) => {
   const { opened, onClose, onClickRegistry } = props;
   const router = useRouter();
   const { setUser } = useUserActions();
+  const { initFavoriteMovies } = useMovieActions();
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm({
@@ -29,12 +31,14 @@ export const LoginModal = (props: Props) => {
     setIsLoading(true);
     userApi
       .login(values)
-      .then(() => {
+      .then((data) => {
+        const user = data?.user;
         notifications.show({
           color: "green",
           message: "Login was successful!",
         });
         setUser(values);
+        initFavoriteMovies(user?.favoriteMovies || []);
         onClose();
         router.push("/profile");
       })

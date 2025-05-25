@@ -20,20 +20,33 @@ export async function POST(req: NextRequest): Promise<Response> {
   if (!user) {
     return NextResponse.json(
       { message: "User with this login does not exist" },
-      { status: 401 }
+      { status: 422 }
     );
   }
 
   //TODO: enc
   if (user.password !== password) {
-    return NextResponse.json({ message: "Wrong password" }, { status: 401 });
+    return NextResponse.json({ message: "Wrong password" }, { status: 422 });
   }
+
+  user.favoriteMovies = await db("favoriteMovies")
+    .join("movies", "movies.id", "favoriteMovies.movieId")
+    .where("favoriteMovies.userId", user.id)
+    .select(
+      "movies.id",
+      "movies.title",
+      "movies.year",
+      "movies.extract",
+      "movies.thumbnail",
+      "movies.genres",
+      "movies.cast"
+    );
 
   const token = jwt.sign({ userId: user.id, login: user.login }, JWT_TOKEN, {
     expiresIn: "7d",
   });
 
-  const response = NextResponse.json({ message: "Login successful" });
+  const response = NextResponse.json({ user });
 
   response.cookies.set({
     name: "token",

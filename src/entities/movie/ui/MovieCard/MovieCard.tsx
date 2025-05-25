@@ -5,9 +5,12 @@ import Image from "next/image";
 import { ActionIcon, Badge, Box, Flex, rem, Stack, Text } from "@mantine/core";
 import imgNotFound from "@public/img-not-found.jpeg";
 import { IconStar, IconStarFilled } from "@tabler/icons-react";
-import { useFavoriteMovie, useMovieActions } from "../../model/store";
+import { useMovie, useMovieActions } from "../../model/store";
 
 import { Movie } from "../../types";
+import * as movieApi from "../../api/movies";
+import { notifications } from "@mantine/notifications";
+import { useUser } from "@/entities/user";
 
 interface MovieCardProps {
   movie: Movie;
@@ -15,17 +18,50 @@ interface MovieCardProps {
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
   const { addFavoriteMovie, removeFavoriteMovie } = useMovieActions();
-  const favoriteMovies = useFavoriteMovie();
+  const user = useUser();
+  const favoriteMovies = useMovie((state) => state.favoriteMovies);
 
-  const handleAddMovie = () => addFavoriteMovie(movie);
-  const handleRemoveMovie = () => removeFavoriteMovie(movie);
+  const handleAddMovie = () => {
+    if (favoriteMovies.length === 5) {
+      notifications.show({
+        color: "red",
+        message: "You have selected the max number of favorite movies",
+      });
+
+      return;
+    }
+
+    movieApi
+      .addFavoriteMovie({ movieId: movie.id })
+      .then(() => {
+        addFavoriteMovie(movie);
+        notifications.show({
+          color: "green",
+          message: "The movie has been added to the favorites catalog",
+        });
+      })
+      .catch(() => {
+        notifications.show({
+          color: "red",
+          message: "Something going wrong...",
+        });
+      });
+  };
+
+  const handleRemoveMovie = () => {
+    movieApi.removeFavoriteMovie({ movieId: movie.id }).then(() => {
+      removeFavoriteMovie(movie);
+      notifications.show({
+        color: "green",
+        message: "The film has been removed from the favorites catalog",
+      });
+    });
+  };
 
   const isFavoriteMovie = useMemo(
     () => !favoriteMovies.some((favMovie) => favMovie.id === movie.id),
     [favoriteMovies]
   );
-
-  console.log("favoriteMovies", favoriteMovies);
 
   return (
     <Flex mt="lg" gap="md">
@@ -49,14 +85,19 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
           </Text>
           <Flex align="center" gap="md">
             <Text>{movie.year}</Text>
-            {isFavoriteMovie ? (
-              <ActionIcon size="md" onClick={handleAddMovie}>
-                <IconStar style={{ width: "70%", height: "70%" }} />
-              </ActionIcon>
-            ) : (
-              <ActionIcon size="md" onClick={handleRemoveMovie}>
-                <IconStarFilled style={{ width: "70%", height: "70%" }} />
-              </ActionIcon>
+
+            {user && (
+              <>
+                {isFavoriteMovie ? (
+                  <ActionIcon size="md" onClick={handleAddMovie}>
+                    <IconStar style={{ width: "70%", height: "70%" }} />
+                  </ActionIcon>
+                ) : (
+                  <ActionIcon size="md" onClick={handleRemoveMovie}>
+                    <IconStarFilled style={{ width: "70%", height: "70%" }} />
+                  </ActionIcon>
+                )}
+              </>
             )}
           </Flex>
         </Flex>

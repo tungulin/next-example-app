@@ -17,13 +17,13 @@ instance.interceptors.response.use(null, ({ response, ...other }) => {
 });
 
 export const login = (params: { login: string; password: string }) => {
-  return instance.post("/login", params);
+  return instance.post("/login", params).then((resp) => resp?.data);
 };
 
 export const registry = (params: { login: string; password: string }) => {
-  return instance.post("/registry", params);
+  return instance.post("/registry", params).then((resp) => resp.data);
 };
 
 export const getUserInfo = () => {
-  return instance.get("/");
+  return instance.get("/").then((resp) => resp.data);
 };

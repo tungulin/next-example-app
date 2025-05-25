@@ -4,18 +4,21 @@ import { useClickOutside, useDisclosure } from "@mantine/hooks";
 import React, { useState } from "react";
 import { LoginModal } from "./LoginModal";
 import { RegistryModal } from "./RegistryModal";
-import { Avatar, Flex, NavLink, Popover, Stack, Text } from "@mantine/core";
+import { Avatar, NavLink, Popover, Stack, Text } from "@mantine/core";
 import { useUser, useUserActions } from "../../model/store";
 
-import classes from "./AvatarSection.module.css";
 import Link from "next/link";
 import { useCookiesNext } from "cookies-next";
 import { AUTH_TOKEN } from "@/shared/constants/default";
 import { useRouter } from "next/navigation";
+import { useMovieActions } from "@/entities/movie";
+
+import classes from "./AvatarSection.module.css";
 
 export const AvatarSection = () => {
   const user = useUser();
   const { clearUser } = useUserActions();
+  const { initFavoriteMovies } = useMovieActions();
   const [isAuthModal, setIsAuthModal] = useState(true);
   const cookies = useCookiesNext();
   const router = useRouter();
@@ -33,6 +36,7 @@ export const AvatarSection = () => {
   const handleLogout = () => {
     cookies.deleteCookie(AUTH_TOKEN);
     clearUser();
+    initFavoriteMovies([]);
     router.push("/");
   };
 
@@ -46,14 +50,20 @@ export const AvatarSection = () => {
             </Text>
           </Popover.Target>
           <Popover.Dropdown ref={popoverRef}>
-            <Stack gap="md">
+            <Stack gap="sm">
               <NavLink
                 w="250"
                 component={Link}
                 href="/profile"
                 label="Profile"
+                className={classes.navLink}
               />
-              <NavLink w="250" label="Logout" onClick={handleLogout} />
+              <NavLink
+                w="250"
+                label="Logout"
+                onClick={handleLogout}
+                className={classes.navLink}
+              />
             </Stack>
           </Popover.Dropdown>
         </Popover>
