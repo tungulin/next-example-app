@@ -9,7 +9,8 @@
         "pretty": "prettier . --write",
         "lint": "next lint",
         "db:init": "cd ./server/database && knex migrate:up && npx ts-node insert.ts",
-        "knex:down": "cd ./server/database && knex migrate:down"
+        "knex:down": "cd ./server/database && knex migrate:down",
+        "prepare": "husky"
     },
     "dependencies": {
         "@mantine/carousel": "^7.17.4",
@@ -43,6 +44,8 @@
         "@types/react-dom": "^19",
         "eslint": "^9",
         "eslint-config-next": "15.2.4",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.1.5",
         "prettier": "3.6.2",
         "ts-node": "^10.9.2",
         "typescript": "^5.8.3"
