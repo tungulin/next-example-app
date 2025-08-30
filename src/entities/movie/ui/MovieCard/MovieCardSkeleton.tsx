@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export const MovieCardSkeleton = () => {
-  return <div>MovieCardSkeleton</div>;
+    return <div>MovieCardSkeleton</div>;
 };

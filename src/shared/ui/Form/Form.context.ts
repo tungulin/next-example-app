@@ -1,5 +1,5 @@
-import { createBareContext } from "@/shared/libs/createBareContext";
-import type { UseFormReturnType } from "@mantine/form";
+import { createBareContext } from '@/shared/libs/createBareContext';
+import type { UseFormReturnType } from '@mantine/form';
 
 const [FormProvider, _useFormContext] = createBareContext();
 

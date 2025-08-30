@@ -1,9 +1,9 @@
 .navLink {
 }
 
-[data-mantine-color-scheme="dark"] .navLink {
-  &:hover {
-    background-color: var(--mantine-color-dark-8);
-    border-radius: var(--mantine-radius-md);
-  }
+[data-mantine-color-scheme='dark'] .navLink {
+    &:hover {
+        background-color: var(--mantine-color-dark-8);
+        border-radius: var(--mantine-radius-md);
+    }
 }

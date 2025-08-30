@@ -8,6 +8,7 @@
 ### About The Project
 
 The project is presented as an example of NextJs capabilities and its rendering methods:
+
 1. SSR.
 2. SSG. **(soon)**
 3. CSR. **(soon)**
@@ -22,19 +23,20 @@ DB_USER= "your user"
 DB_PASS= "your password"
 DB_NAME= "your db name"
 ```
-2. Install all dependencies: 
+
+2. Install all dependencies:
 
 ```bash
 yarn
 ```
 
-3. Initialize the database and write test movie data into it: 
+3. Initialize the database and write test movie data into it:
 
 ```bash
-yarn db:init 
+yarn db:init
 ```
 
-4. Run project: 
+4. Run project:
 
 ```bash
 yarn dev

@@ -1,59 +1,59 @@
 .root {
-  min-width: 300px;
-  min-height: calc(100vh - 60px);
-  padding-right: 30px;
-  border-right: 1px solid var(--mantine-color-gray-2);
+    min-width: 300px;
+    min-height: calc(100vh - 60px);
+    padding-right: 30px;
+    border-right: 1px solid var(--mantine-color-gray-2);
 }
 
 .list {
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10;
 }
 
 .listItem {
-  display: flex;
-  padding-inline: 5;
-  align-items: center;
-  cursor: pointer;
-  border-radius: 5;
-  text-decoration: none;
-  color: inherit;
+    display: flex;
+    padding-inline: 5;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5;
+    text-decoration: none;
+    color: inherit;
 }
 
 .listItem .mantine-List-itemWrapper {
-  width: 100%;
+    width: 100%;
 }
 
 .listItemIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-[data-mantine-color-scheme="dark"] .root {
-  background-color: var(--mantine-color-dark-8);
-  border-right: 1px solid var(--mantine-color-dark-7);
+[data-mantine-color-scheme='dark'] .root {
+    background-color: var(--mantine-color-dark-8);
+    border-right: 1px solid var(--mantine-color-dark-7);
 }
 
-[data-mantine-color-scheme="light"] .listItem {
-  &[data-active] {
-    background-color: var(--mantine-color-gray-2);
-  }
+[data-mantine-color-scheme='light'] .listItem {
+    &[data-active] {
+        background-color: var(--mantine-color-gray-2);
+    }
 
-  &:hover {
-    background-color: var(--mantine-color-gray-2);
-  }
+    &:hover {
+        background-color: var(--mantine-color-gray-2);
+    }
 }
 
-[data-mantine-color-scheme="dark"] .listItem {
-  &[data-active] {
-    background-color: var(--mantine-color-dark-3);
-  }
+[data-mantine-color-scheme='dark'] .listItem {
+    &[data-active] {
+        background-color: var(--mantine-color-dark-3);
+    }
 
-  &:hover {
-    background-color: var(--mantine-color-dark-3);
-  }
+    &:hover {
+        background-color: var(--mantine-color-dark-3);
+    }
 }
